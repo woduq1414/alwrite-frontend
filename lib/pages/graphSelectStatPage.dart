@@ -1,6 +1,7 @@
 import 'package:alwrite/controllers/StatController.dart';
 import 'package:alwrite/models/statModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,19 +28,28 @@ class GraphSelectStatPage extends StatelessWidget {
             children: [
               Container(
                 width: 350,
-                child: ListView.builder(
-                    itemCount: controller.statList.length,
-                    itemBuilder: ((context, index) {
-                      return Card(
-                          child: InkWell(
-                        onTap: () {
-                          controller.selectedStatIndex = index;
-                          controller.update();
-                        },
-                        child: ListTile(
-                            title: Text(controller.statList[index].STATBL_NM)),
-                      ));
-                    })),
+                child: controller.statList.length == 0
+                    ? SpinKitSquareCircle(
+                        color: Colors.blue,
+                        size: 100.0,
+                      )
+                    : ListView.builder(
+                        itemCount: controller.statList.length,
+                        itemBuilder: ((context, index) {
+                          return Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(5),
+                                onTap: () {
+                                  controller.selectedStatIndex = index;
+                                  controller.update();
+                                },
+                                child: ListTile(
+                                    title: Text(
+                                        controller.statList[index].STATBL_NM)),
+                              ));
+                        })),
               ),
               selectedStat == null
                   ? Container()
@@ -128,7 +138,7 @@ class StatDetailRow extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border(
                     right: BorderSide(
-                        color: Color.fromARGB(255, 255, 160, 160), width: 2))),
+                        color: Colors.blue, width: 2))),
             child: Text(
               label,
               style: TextStyle(

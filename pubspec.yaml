@@ -43,6 +43,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   intl: ^0.19.0
   web_image_downloader: ^1.0.1
+  url_launcher_web: ^2.2.3
+  url_launcher: ^6.0.6
   # image_downloader_web: ^2.0.4
 
 dev_dependencies:

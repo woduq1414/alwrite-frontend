@@ -1,5 +1,6 @@
 import 'package:alwrite/controllers/StatController.dart';
 import 'package:alwrite/pages/documentSimilarPage.dart';
+import 'package:alwrite/pages/documentWritePage.dart';
 import 'package:alwrite/pages/graphEditPage.dart';
 import 'package:alwrite/pages/graphRangePage.dart';
 import 'package:alwrite/pages/graphSelectStatPage.dart';
@@ -71,14 +72,6 @@ class StatefulShellRouteExampleApp extends StatelessWidget {
                     detailsPath: '/home/details',
                   );
                 },
-                routes: <RouteBase>[
-                  GoRoute(
-                    path: 'details',
-                    builder: (BuildContext context, GoRouterState state) {
-                      return const DetailsScreen(label: 'H');
-                    },
-                  ),
-                ],
               ),
             ],
           ),
@@ -87,13 +80,13 @@ class StatefulShellRouteExampleApp extends StatelessWidget {
               GoRoute(
                 path: '/document',
                 builder: (BuildContext context, GoRouterState state) {
-                  return DocumentSimilarPage();
+                  return DocumentWritePage();
                 },
                 routes: <RouteBase>[
                   GoRoute(
-                    path: 'details',
+                    path: 'result',
                     builder: (BuildContext context, GoRouterState state) {
-                      return const DetailsScreen(label: 'A');
+                      return DocumentSimilarPage();
                     },
                   ),
                 ],
@@ -156,23 +149,26 @@ class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("hello")),
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.all(30),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(
-              'Screen $label',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const Padding(padding: EdgeInsets.all(4)),
-            TextButton(
-              onPressed: () {
-                GoRouter.of(context).go(detailsPath);
-              },
-              child: const Text('View details'),
-            ),
-            const Padding(padding: EdgeInsets.all(4)),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                text: '국회 데이터를\n글쓰기에\n손쉽게 활용하세요.\n',
+                style: TextStyle(fontSize: 80, height: 1.1),
+              ),
+              WidgetSpan(child: 
+              SizedBox(
+                height: 120,
+              ),),
+              TextSpan(
+                text: 'ALWRITE',
+                style: TextStyle(fontSize: 95, fontWeight:FontWeight.bold, color: Colors.blue),
+              ),
+            ]))
           ],
         ),
       ),
