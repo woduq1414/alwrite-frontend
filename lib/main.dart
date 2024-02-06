@@ -127,7 +127,7 @@ class StatefulShellRouteExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Go_router Complex Demo',
+      title: 'ALWRITE',
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
@@ -166,7 +166,7 @@ class RootScreen extends StatelessWidget {
               ),),
               TextSpan(
                 text: 'ALWRITE',
-                style: TextStyle(fontSize: 95, fontWeight:FontWeight.bold, color: Colors.blue),
+                style: TextStyle(fontSize: 95, fontWeight:FontWeight.bold, color: Colors.blue, letterSpacing: 8),
               ),
             ]))
           ],

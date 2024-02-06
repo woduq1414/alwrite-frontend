@@ -251,7 +251,7 @@ class GraphEditPage extends StatelessWidget {
                         controller.update();
                         controller.getEditedGraph(
                             selectedStat.STATBL_ID, textarea.text);
-                        textarea.text = "";
+                        // textarea.text = "";
                       },
                       child: Text(
                         "제출",

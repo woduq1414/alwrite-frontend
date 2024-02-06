@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DocumentSimilarPage extends StatelessWidget {
   DocumentSimilarPage({super.key});
@@ -85,8 +85,8 @@ class DocumentSimilarPage extends StatelessWidget {
                           : ListView.builder(
                               itemCount: controller.documentList.length,
                               itemBuilder: ((context, index) {
-                                Uri _url =
-                                    Uri.parse(controller.lawList[index].url);
+                                Uri _url = Uri.parse(
+                                    controller.documentList[index].url);
                                 return Card(
                                     child: InkWell(
                                   onTap: () {
@@ -106,7 +106,17 @@ class DocumentSimilarPage extends StatelessWidget {
                                     trailing: InkWell(
                                       child: Icon(Icons.copy),
                                       onTap: () {
-                                        Clipboard.setData(ClipboardData(text: controller.documentList[index].reference));
+                                        Clipboard.setData(ClipboardData(
+                                            text: controller.documentList[index]
+                                                .reference));
+                                        Fluttertoast.showToast(
+                                            msg: "참고문헌 텍스트가 클립보드에 복사되었습니다.",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.blue,
+                                            textColor: Colors.black,
+                                            fontSize: 16.0);
                                       },
                                     ),
                                   ),
