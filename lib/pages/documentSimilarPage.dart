@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:alwrite/controllers/DocumentController.dart';
 import 'package:alwrite/controllers/StatController.dart';
+import 'package:alwrite/models/paragraphModel.dart';
 import 'package:alwrite/models/statModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -57,24 +60,74 @@ class DocumentSimilarPage extends StatelessWidget {
                               size: 100.0,
                             )
                           : ListView.builder(
-                              itemCount: controller.lawList.length,
+                              itemCount: controller.lawParagraphList.length,
                               itemBuilder: ((context, index) {
-                                Uri _url =
-                                    Uri.parse(controller.lawList[index].url);
-                                return Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(5),
-                                      onTap: () {
-                                        launchUrl(_url);
-                                      },
-                                      child: ListTile(
-                                        title: Text(
-                                            controller.lawList[index].title),
-                                        trailing: Icon(Icons.chevron_right),
+                                ParagraphModel paragraph =
+                                    controller.lawParagraphList[index];
+                                return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 240, 240, 240),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 0),
+                                        margin: EdgeInsets.only(bottom: 5),
+                                        child: Text(
+                                          "> " + paragraph.text,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
                                       ),
-                                    ));
+                                      Column(
+                                          children: paragraph.data.map((law) {
+                                        int idx = paragraph.data.indexOf(law);
+                                        return Card(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            child: InkWell(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              onTap: () {
+                                                launchUrl(Uri.parse(law.url));
+                                              },
+                                              child: ListTile(
+                                                title: Text(
+                                                    paragraph.data[idx].title),
+                                                trailing: InkWell(
+                                                  child: Icon(Icons.copy),
+                                                  onTap: () {
+                                                    Clipboard.setData(
+                                                        ClipboardData(
+                                                            text: paragraph
+                                                                .data[idx]
+                                                                .reference));
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "참고문헌 텍스트가 클립보드에 복사되었습니다.",
+                                                        toastLength:
+                                                            Toast.LENGTH_SHORT,
+                                                        gravity:
+                                                            ToastGravity.CENTER,
+                                                        timeInSecForIosWeb: 1,
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        textColor: Colors.black,
+                                                        fontSize: 16.0);
+                                                  },
+                                                ),
+                                              ),
+                                            ));
+                                      }).toList())
+                                    ],
+                                  ),
+                                );
                               }));
                     } else {
                       return controller.isFetchingDocument
@@ -83,44 +136,75 @@ class DocumentSimilarPage extends StatelessWidget {
                               size: 100.0,
                             )
                           : ListView.builder(
-                              itemCount: controller.documentList.length,
+                              itemCount: controller.documentParagraphList.length,
                               itemBuilder: ((context, index) {
-                                Uri _url = Uri.parse(
-                                    controller.documentList[index].url);
-                                return Card(
-                                    child: InkWell(
-                                  onTap: () {
-                                    launchUrl(_url);
-                                  },
-                                  child: ListTile(
-                                    title: Text(
-                                        controller.documentList[index].title),
-                                    subtitle: Text(
-                                      controller.documentList[index].writer +
-                                          " | " +
-                                          controller.documentList[index].date +
-                                          " | " +
-                                          controller.documentList[index].from,
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    trailing: InkWell(
-                                      child: Icon(Icons.copy),
-                                      onTap: () {
-                                        Clipboard.setData(ClipboardData(
-                                            text: controller.documentList[index]
-                                                .reference));
-                                        Fluttertoast.showToast(
-                                            msg: "참고문헌 텍스트가 클립보드에 복사되었습니다.",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.blue,
-                                            textColor: Colors.black,
-                                            fontSize: 16.0);
-                                      },
-                                    ),
+                                ParagraphModel paragraph =
+                                    controller.documentParagraphList[index];
+                                return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 5),
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 240, 240, 240),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 0),
+                                        margin: EdgeInsets.only(bottom: 5),
+                                        child: Text(
+                                          "> " + paragraph.text,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      Column(
+                                          children: paragraph.data.map((doc) {
+                                        int idx = paragraph.data.indexOf(doc);
+                                        return Card(
+                                            child: InkWell(
+                                          onTap: () {
+                                            launchUrl(Uri.parse(
+                                                paragraph.data[idx].url));
+                                          },
+                                          child: ListTile(
+                                            title: Text(paragraph.data[idx].title),
+                                            subtitle: Text(
+                                              paragraph.data[idx].writer +
+                                                  " | " +
+                                                  paragraph.data[idx].date +
+                                                  " | " +
+                                                  paragraph.data[idx].from,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                            trailing: InkWell(
+                                              child: Icon(Icons.copy),
+                                              onTap: () {
+                                                Clipboard.setData(ClipboardData(
+                                                    text: paragraph
+                                                        .data[idx].reference));
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "참고문헌 텍스트가 클립보드에 복사되었습니다.",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.CENTER,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Colors.blue,
+                                                    textColor: Colors.black,
+                                                    fontSize: 16.0);
+                                              },
+                                            ),
+                                          ),
+                                        ));
+                                      }).toList())
+                                    ],
                                   ),
-                                ));
+                                );
                               }));
                     }
                   }).toList(),
