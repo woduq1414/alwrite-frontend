@@ -19,6 +19,8 @@ class StatController extends GetxController {
 
   int selectedGraphTypeIndex = 0;
 
+  int selectedTemplateIndex = -1;
+
   int selectedGraphIndex = -1;
 
   bool isFetchingTable = false;
@@ -127,6 +129,7 @@ class StatController extends GetxController {
       "statbl_id": STATBL_ID,
       "prompt": prompt,
       "graph_type": selectedGraphTypeIndex,
+      "template_index": selectedTemplateIndex,
       "stat_data": rowDatas.map((e) => e.toJson()).toList()
     });
     

@@ -92,7 +92,8 @@ class GraphEditPage extends StatelessWidget {
                                       child: ElevatedButton(
                                         onPressed: () {
                                           WebImageDownloader.downloadImage(
-                                              imageKey, "${selectedStat!.STATBL_NM}.png");
+                                              imageKey,
+                                              "${selectedStat!.STATBL_NM}.png");
                                         },
                                         child: Text(
                                           "저장",
@@ -219,6 +220,59 @@ class GraphEditPage extends StatelessWidget {
                           }),
                     ],
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  controller.selectedGraphTypeIndex == 0 ? Row(
+                    children: [
+                      Text(
+                        "템플릿 :",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Row(
+                        children: [0, 1, 2, 3]
+                            .map((e) => Container(
+                              margin: EdgeInsets.only(right: 5),
+                              child: Material(
+                                    
+                                    borderRadius: BorderRadius.circular(5),
+                                    child: InkWell(
+                                      onTap: () {
+                                        if(controller.selectedTemplateIndex == e) {
+                                          controller.selectedTemplateIndex = -1;
+                                          controller.update();
+                                          return;
+                                        }
+                                        controller.selectedTemplateIndex = e;
+                                        controller.update();
+                                      
+                                      },
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.grey[300]!),
+                                          borderRadius: BorderRadius.circular(5),
+                                          color: controller.selectedTemplateIndex == e
+                                              ? Colors.grey[200]
+                                              : Colors.white,
+                                        ),
+                                        child: Image.network(
+                                          "${API_URL}/graph/template/${e}.png",
+                                          height: 75,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                            ))
+                            .toList(),
+                      )
+                    ],
+                  ) : Container(),
                   SizedBox(
                     height: 5,
                   ),

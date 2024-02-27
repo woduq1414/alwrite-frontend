@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 
 Future<void> main() async {
   Intl.defaultLocale = 'ko_KR';
-  // setPathUrlStrategy();
+  setPathUrlStrategy();
   runApp(
     StatefulShellRouteExampleApp(),
   );
